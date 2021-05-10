@@ -41,7 +41,7 @@ struct ChartsView: View {
             }
         }
         .onAppear(){
-            healthStore.requestAuth(){ success in
+            healthStore.checktAuth(){ success in
                 DispatchQueue.main.sync {
                     healthKitIsAuthorized = success
                 }
