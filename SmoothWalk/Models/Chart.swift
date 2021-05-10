@@ -12,6 +12,7 @@ struct Chart:Identifiable{
     let chartType:ChartType
     let chartInterval:ChartInterval
     let title:String
+    let description:String
     let legend:String
     let unit:String
 }
