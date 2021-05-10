@@ -17,6 +17,7 @@ class ChartViewModel: ObservableObject {
     var chartInterval:ChartInterval
     var chartType:ChartType
     var title:String
+    var description:String
     var legend:String
     var unit:String
     init(chart:Chart, healthStore:HealthStore){
@@ -24,6 +25,7 @@ class ChartViewModel: ObservableObject {
         self.chartType = chart.chartType
         self.healthStore = healthStore
         self.title = chart.title
+        self.description = chart.description
         self.legend = chart.legend
         self.unit = chart.unit
         self.healthStore.fetchData(chartInterval:chartInterval,

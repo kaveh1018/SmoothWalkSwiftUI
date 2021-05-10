@@ -31,6 +31,6 @@ struct ChartView: UIViewRepresentable {
         uiView.graphView.yMaximum = (viewModel.seriesValues.max() ?? 0 ) + 1
         uiView.graphView.horizontalAxisMarkers = viewModel.labels
         uiView.headerView.titleLabel.text = viewModel.title
-        uiView.headerView.detailLabel.text  =  String(format: "Average: %0.2f \(viewModel.unit)", viewModel.seriesValues.average)
+        uiView.headerView.detailLabel.text  =  String(format: "\(viewModel.description) %0.2f \(viewModel.unit)", viewModel.seriesValues.average)
     }
 }
