@@ -48,10 +48,11 @@ class HealthStore : ObservableObject {
     }
     
     
-    func requestAuth(completion: @escaping (Bool)->()) {
+    func checktAuth(completion: @escaping (Bool)->()) {
         
         guard let walkingSpeed = ChartType.walkingSpeed.queryInfo().quantityType,
-              let stepType = ChartType.step.queryInfo().quantityType
+              let stepType = ChartType.step.queryInfo().quantityType,
+              let healthStore = healthStore
         else {
             completion(false)
             return
@@ -61,12 +62,29 @@ class HealthStore : ObservableObject {
             completion(true)
             return
         }
+        
+         
+        healthStore.getRequestStatusForAuthorization(toShare: [stepType,walkingSpeed], read: [stepType,walkingSpeed]) { [weak self] (status, error) in
 
-        HKHealthStore().requestAuthorization(toShare: [], read: [stepType,walkingSpeed]) { [weak self] (success, error) in
-            self?.authorized  = success
-            completion(success)
+            if status  == .shouldRequest {
+                self?.requestAuthorization(permissions:[stepType,walkingSpeed]) { success in
+                    self?.authorized  = success
+                    completion(success)
+                }
+                
+            }
         }
         
+
+
+
+        
+    }
+    
+    func requestAuthorization(permissions:[HKQuantityType], completion: @escaping (Bool)->() ){
+        healthStore?.requestAuthorization(toShare: [], read: Set(permissions)) { (success, error) in
+            completion(success)
+        }
     }
     
 }
